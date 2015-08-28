@@ -15,6 +15,7 @@
 package thjug.cassandra;
 
 import beforetest.EmbeddedCassandra;
+import beforetest.InitialKeyspace;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -28,6 +29,7 @@ public class ManagerNGTest {
     @BeforeClass
     public void before() {
         assert EmbeddedCassandra.isStart();
+        assert InitialKeyspace.verify();
     }
 
     @Test
@@ -52,5 +54,11 @@ public class ManagerNGTest {
     public void testCreateSessionWithExistKeySpace() {
         final Manager m = Manager.getInstance();
         assert m.createSession("system") !=  null : "session should not be null";
+    }
+
+    @Test
+    public void testCreateSessionWithInitialKeySpace() {
+        final Manager m = Manager.getInstance();
+        assert m.createSession("prsley") !=  null : "session should not be null";
     }
 }
