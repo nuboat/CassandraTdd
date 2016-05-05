@@ -21,9 +21,14 @@ import thjug.cassandra.Manager;
  * @author nuboat
  */
 public class InitialKeyspace {
-    private static final Logger log = LoggerFactory.getLogger("meta");
+	
+    private static final Logger LOG = LoggerFactory.getLogger("meta");
 
-    private static final InitialKeyspace k = new InitialKeyspace();
+    private static final InitialKeyspace KEYSPACE = new InitialKeyspace();
+	
+	public static boolean verify() {
+		return KEYSPACE.status;
+	}
 
     private boolean status = false;
 
@@ -38,12 +43,8 @@ public class InitialKeyspace {
                 + " };");
             status = true;
         } catch (final RuntimeException ex) {
-            log.error(ex.getMessage(), ex);
+            LOG.error(ex.getMessage(), ex);
         }
-    }
-
-    public static boolean verify() {
-        return k.status;
     }
 
 }

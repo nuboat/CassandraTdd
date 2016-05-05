@@ -28,24 +28,21 @@ import org.slf4j.LoggerFactory;
  */
 public class EmbeddedCassandra {
 
-    private static final Logger log = LoggerFactory.getLogger("meta");
+    private static final Logger LOG = LoggerFactory.getLogger("meta");
 
-    private static boolean isStart;
-
-    private static final EmbeddedCassandra em = new EmbeddedCassandra();
-
-    private EmbeddedCassandra() {
-        try {
-            EmbeddedCassandraServerHelper.startEmbeddedCassandra("cassandra.yaml");
-            isStart = true;
-        } catch(final TTransportException | IOException |
-                ConfigurationException ex) {
-            isStart = false;
-            log.error(ex.getMessage(), ex);
-        }
-    }
+	private static final EmbeddedCassandra EC = new EmbeddedCassandra();
 
     public static boolean isStart() {
-        return isStart;
+        return EC != null;
     }
+	
+	private EmbeddedCassandra() {
+		try {
+			EmbeddedCassandraServerHelper.startEmbeddedCassandra("cassandra.yaml");
+		} catch(final TTransportException | IOException |
+				ConfigurationException ex) {
+			LOG.error(ex.getMessage(), ex);
+		}
+	}
+
 }

@@ -26,7 +26,11 @@ import com.datastax.driver.core.Session;
  */
 public class Manager {
 
-    private static final Manager manager = new Manager();
+    private static final Manager MANAGER = new Manager();
+	
+	public static Manager getInstance() {
+		return MANAGER;
+	}
 
     private final Cluster cluster;
 
@@ -38,10 +42,6 @@ public class Manager {
                 .withPort(9142)
                 .withPoolingOptions(poolingOptions)
                 .build();
-    }
-
-    public static Manager getInstance() {
-        return manager;
     }
 
     public Metadata getMeta() {

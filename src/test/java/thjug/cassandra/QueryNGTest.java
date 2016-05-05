@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
  */
 public class QueryNGTest {
 
-    private static final Logger log = LoggerFactory.getLogger(QueryNGTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(QueryNGTest.class);
 
     @BeforeClass
     public void before() {
@@ -40,7 +40,7 @@ public class QueryNGTest {
 
         assert result.isEmpty() == false : "result should not empty";
 
-        result.forEach( r -> log.info("{}", r));
+        result.forEach( r -> LOG.info("{}", r));
     }
 
 }
