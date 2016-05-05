@@ -27,12 +27,28 @@ import java.util.List;
 public class Query {
 
     private static final String LOCAL = "SELECT * FROM local;";
+	
+	private final String keyspace;
+	
+	public Query(final String keyspace) {
+		this.keyspace = keyspace;
+	}
 
     public List<Row> querySystem() {
         final Statement stmt = new SimpleStatement(LOCAL);
         stmt.setConsistencyLevel(ConsistencyLevel.ONE);
 
-        final Session s = Manager.getInstance().createSession("system");
+        final Session s = Manager.getInstance().createSession(keyspace);
+        final ResultSet r = s.execute(stmt);
+
+        return r.all();
+    }
+	
+	public List<Row> query(final String query) {
+        final Statement stmt = new SimpleStatement(query);
+        stmt.setConsistencyLevel(ConsistencyLevel.ONE);
+
+        final Session s = Manager.getInstance().createSession(keyspace);
         final ResultSet r = s.execute(stmt);
 
         return r.all();

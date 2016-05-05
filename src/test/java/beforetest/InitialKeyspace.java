@@ -27,21 +27,30 @@ public class InitialKeyspace {
     private static final InitialKeyspace KEYSPACE = new InitialKeyspace();
 	
 	public static boolean verify() {
-		return KEYSPACE.status;
+		return KEYSPACE != null;
 	}
-
-    private boolean status = false;
-
+	
     private InitialKeyspace() {
         final Manager m = Manager.getInstance();
-        final Session s = m.createSession();
+        final Session system = m.createSession();
         try {
-            s.execute("CREATE KEYSPACE prsley\n"
+            system.execute("CREATE KEYSPACE thjug\n"
                 + " WITH replication = {\n"
                 + "	'class' : 'SimpleStrategy',\n"
                 + "	'replication_factor' : 1\n"
                 + " };");
-            status = true;
+			
+			final Session thjug = m.createSession("thjug");
+			thjug.execute("CREATE TABLE hotels (\n"
+				+ "	id text,\n"
+				+ "	group text,\n"
+				+ "	name text,\n"
+				+ "	city text,\n"
+				+ "	PRIMARY KEY (id)\n"
+				+ ");");
+			
+			thjug.execute("insert into hotels (id, city, group, name) values \n"
+				+ " ('1', 'Bangkok', 'Starwood', 'Sheraton');");
         } catch (final RuntimeException ex) {
             LOG.error(ex.getMessage(), ex);
         }

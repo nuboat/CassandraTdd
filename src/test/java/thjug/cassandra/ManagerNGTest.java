@@ -59,6 +59,7 @@ public class ManagerNGTest {
     @Test
     public void testCreateSessionWithInitialKeySpace() {
         final Manager m = Manager.getInstance();
-        assert m.createSession("prsley") !=  null : "session should not be null";
+        assert m.createSession("thjug") !=  null : "session should not be null";
     }
+	
 }
